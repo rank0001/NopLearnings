@@ -1,0 +1,38 @@
+﻿<div class="header">
+    @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.HeaderBefore })
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex">
+                @await Component.InvokeAsync(typeof(TaxTypeSelectorViewComponent))
+                @await Component.InvokeAsync(typeof(CurrencySelectorViewComponent))
+                @await Component.InvokeAsync(typeof(LanguageSelectorViewComponent))
+                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.HeaderSelectors })
+            </div>
+            <div class="header-links-wrapper">
+                @await Component.InvokeAsync(typeof(HeaderLinksViewComponent))
+                @await Component.InvokeAsync(typeof(FlyoutShoppingCartViewComponent))
+            </div>
+        </div>
+    </div>
+    @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.HeaderMiddle })
+    <div class="header-lower">
+        <div class="bg-body-tertiary py-3">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container">
+                    <div class="header-logo">
+                        @await Component.InvokeAsync(typeof(LogoViewComponent))
+                    </div>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
+                        <div class="search-box store-search-box">
+                            @await Component.InvokeAsync(typeof(SearchBoxViewComponent))
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.HeaderAfter })
+</div>
