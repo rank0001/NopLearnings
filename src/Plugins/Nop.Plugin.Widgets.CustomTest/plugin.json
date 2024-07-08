@@ -1,0 +1,11 @@
+{
+  "Group": "Widgets",
+  "FriendlyName": "Custom Test",
+  "SystemName": "Widgets.CustomTest",
+  "Version": "4.70.1",
+  "SupportedVersions": [ "4.70" ],
+  "Author": "sakib",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.Widgets.CustomTest.dll",
+  "Description": "This is a test plugin"
+}

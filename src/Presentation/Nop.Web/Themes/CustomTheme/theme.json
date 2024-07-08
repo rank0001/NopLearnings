@@ -1,0 +1,7 @@
+﻿{
+  "SystemName": "CustomTheme",
+  "FriendlyName": "Custom Theme",
+  "SupportRTL": true,
+  "PreviewImageUrl": "~/Themes/CustomTheme/preview.jpg",
+  "PreviewText": "The 'CustomTheme' site theme"
+}

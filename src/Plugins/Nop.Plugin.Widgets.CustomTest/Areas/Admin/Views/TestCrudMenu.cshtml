@@ -1,0 +1,59 @@
+@model StudentModel
+
+@{
+    //page title
+    ViewBag.PageTitle = "CrudTest";
+    //active menu item (system name)
+    NopHtml.SetActiveMenuItemSystemName("Crud Test");
+}
+
+<div class="content-header clearfix">
+    <h1 class="float-left">
+        Crud Tests
+    </h1>
+    <div class="float-right">
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus-square"></i>
+            Add New
+        </a>
+        @await Component.InvokeAsync(typeof(AdminWidgetViewComponent), new { widgetZone = AdminWidgetZones.BlogListButtons, additionalData = Model })
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="form-horizontal">
+            <div class="form-horizontal">
+                <div class="cards-group">
+                    <div class="card card-default">
+                        <div class="card-body">
+                            @await Html.PartialAsync("Table", new DataTablesModel
+                       {
+                           Name = "studentList-grid",
+                           UrlRead = new DataUrl("GetAllStudentList", "CustomTest", null),
+                           SearchButtonId = "search-student",
+                           Paging = false,
+                           Length = 10,
+                           LengthMenu = "10, 20, 50, 100",
+                           Filters = new List<FilterParameter>(),
+                           ColumnCollection = new List<ColumnProperty>
+                            {
+                            new ColumnProperty(nameof(StudentModel.Age))
+                            {
+                            Title = "Age",
+                            Width = "100"
+                            },
+                            new ColumnProperty(nameof(StudentModel.Name))
+                            {
+                            Title = "Name",
+                            Width = "100"
+                            }
+                            }
+                       })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
