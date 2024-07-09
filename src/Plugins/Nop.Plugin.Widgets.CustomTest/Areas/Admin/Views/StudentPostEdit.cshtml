@@ -1,0 +1,41 @@
+@model StudentCreateModel
+
+@{
+    //page title
+    ViewBag.PageTitle = T("Admin.Plugins.CrudTest.Edit").Text;
+    //active menu item (system name)
+    //NopHtml.SetActiveMenuItemSystemName("Blog posts");
+}
+
+<form asp-controller="CustomTest" asp-action="StudentPostEdit" method="post">
+    <div class="content-header clearfix">
+        <h1 class="float-left">
+            @T("Admin.Plugins.CrudTest.Edit")
+            <small>
+                <i class="fas fa-arrow-circle-left"></i>
+                <a asp-action="BlogPosts">@T("Admin.Plugins.CrudTestList")</a>
+            </small>
+        </h1>
+        <div class="float-right">
+@*             <button type="button" onclick="javascript:OpenWindow('@(Url.RouteUrl<StudentCreateModel>(new { SeName = Model.SeName }))', 800, 600, true); return false;" class="btn btn-info">
+                <i class="far fa-eye"></i>
+                @T("Admin.Common.Preview")
+            </button> *@
+            <button type="submit" name="save" class="btn btn-primary">
+                <i class="far fa-save"></i>
+                @T("Admin.Common.Save")
+            </button>
+            <button type="submit" name="save-continue" class="btn btn-primary">
+                <i class="far fa-save"></i>
+                @T("Admin.Common.SaveContinue")
+            </button>
+            <span id="student-delete" class="btn btn-danger">
+                <i class="far fa-trash-alt"></i>
+                @T("Admin.Common.Delete")
+            </span>
+            @await Component.InvokeAsync(typeof(AdminWidgetViewComponent), new { widgetZone = AdminWidgetZones.BlogDetailsButtons, additionalData = Model })
+        </div>
+    </div>
+    @await Html.PartialAsync("_CreateOrUpdateStudent", Model)
+</form>
+<nop-delete-confirmation asp-model-id="@Model.Id" asp-button-id="student-delete" />

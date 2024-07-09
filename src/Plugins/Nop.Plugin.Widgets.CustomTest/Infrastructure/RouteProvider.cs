@@ -23,9 +23,9 @@ public class RouteProvider : IRouteProvider
         endpointRouteBuilder.MapControllerRoute(name: "Plugin.Widgets.CustomTest.Test",
             pattern: "Admin/CustomTest/TestCrudMenu",
             defaults: new { controller = "CustomTest", action = "TestCrudMenu", area = AreaNames.ADMIN });
-        endpointRouteBuilder.MapControllerRoute(name: "Plugin.Widgets.CustomTest.Test",
-            pattern: "Admin/CustomTest/GetAllStudentListAsync",
-            defaults: new { controller = "CustomTest", action = "GetAllStudentList", area = AreaNames.ADMIN });
+        //endpointRouteBuilder.MapControllerRoute(name: "Plugin.Widgets.CustomTest.Test",
+        //    pattern: "Admin/CustomTest/GetAllStudentListAsync",
+        //    defaults: new { controller = "CustomTest", action = "GetAllStudentList", area = AreaNames.ADMIN });
     }
 
     /// <summary>

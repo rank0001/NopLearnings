@@ -1,18 +1,18 @@
-@model StudentModel
+@model StudentCreateModel
 @{    
     //page title
-    ViewBag.PageTitle = T("Admin.ContentManagement.Blog.BlogPosts.AddNew").Text;
+    ViewBag.PageTitle = T("Admin.Plugins.Crudtest.AddNew").Text;
     //active menu item (system name)
-    NopHtml.SetActiveMenuItemSystemName("Blog posts");
+    //NopHtml.SetActiveMenuItemSystemName("Blog posts");
 }
 
-<form asp-controller="CustomTest" asp-action="CrudPostCreate" method="post">
+<form asp-controller="CustomTest" asp-action="StudentPostCreate" method="post">
     <div class="content-header clearfix">
         <h1 class="float-left">
-            @T("Admin.ContentManagement.Blog.BlogPosts.AddNew")
+            @T("Admin.Plugins.Crudtest.AddNew")
             <small>
                 <i class="fas fa-arrow-circle-left"></i>
-                <a asp-action="TestCrudMenu">@T("Admin.ContentManagement.Blog.BlogPosts.BackToList")</a>
+                <a asp-action="TestCrudMenu">@T("Admin.Plugins.Crudtest.BackToList")</a>
             </small>
         </h1>
         <div class="float-right">
@@ -27,6 +27,6 @@
             @await Component.InvokeAsync(typeof(AdminWidgetViewComponent), new { widgetZone = AdminWidgetZones.BlogDetailsButtons, additionalData = Model })
         </div>
     </div>
-    @await Html.PartialAsync("_CreateOrUpdate", Model)
+    @await Html.PartialAsync("_CreateOrUpdateStudent", Model)
 </form>
 

@@ -14,14 +14,14 @@
 
 <div class="content-header clearfix">
     <h1 class="float-left">
-        @T("Admin.Plugins.Crudtest")
+        @T("Admin.Plugins.CrudTestList")
     </h1>
     <div class="float-right">
-        <a asp-action="CrudPostCreate" class="btn btn-primary">
+        <a asp-action="StudentPostCreate" class="btn btn-primary">
             <i class="fas fa-plus-square"></i>
             @T("Admin.Common.AddNew")
         </a>
-     @*    @await Component.InvokeAsync(typeof(AdminWidgetViewComponent), new { widgetZone = AdminWidgetZones.BlogListButtons, additionalData = Model }) *@
+        @*    @await Component.InvokeAsync(typeof(AdminWidgetViewComponent), new { widgetZone = AdminWidgetZones.BlogListButtons, additionalData = Model }) *@
     </div>
 </div>
 
@@ -42,13 +42,13 @@
                             <div class="search-body @(hideSearchBlock ? "closed" : "")">
                                 <div class="row">
                                     <div class="col-md-6">
-@*                                         <div class="form-group row" >
-                                            <div class="col-md-4">
-                                                <nop-label asp-for="BlogPosts.SearchStoreId" />
-                                            </div>
-                                            <div class="col-md-8">
-                                                <nop-select asp-for="BlogPosts.SearchStoreId" asp-items="Model.BlogPosts.AvailableStores" />
-                                            </div>
+                                        @*                                         <div class="form-group row" >
+                                        <div class="col-md-4">
+                                        <nop-label asp-for="BlogPosts.SearchStoreId" />
+                                        </div>
+                                        <div class="col-md-8">
+                                        <nop-select asp-for="BlogPosts.SearchStoreId" asp-items="Model.BlogPosts.AvailableStores" />
+                                        </div>
                                         </div> *@
                                         <div class="form-group row">
                                             <div class="col-md-4">
@@ -79,9 +79,10 @@
                            Name = "studentList-grid",
                            UrlRead = new DataUrl("GetAllStudentList", "CustomTest", null),
                            SearchButtonId = "search-student",
-                           Paging = false,
                            Length = 10,
                            LengthMenu = "10, 20, 50, 100",
+                           // Length = Model.StudentPosts.PageSize,
+                           // LengthMenu = Model.StudentPosts.AvailablePageSizes,
                            Filters = new List<FilterParameter>(),
                            ColumnCollection = new List<ColumnProperty>
                             {
@@ -94,8 +95,15 @@
                             {
                             Title = "Name",
                             Width = "100"
-                            }
-                            }
+                            },
+                            new ColumnProperty(nameof(StudentModel.Id))
+                            {
+                            Title = T("Admin.Common.Edit").Text,
+                            Width = "100",
+                            ClassName = NopColumnClassDefaults.Button,
+                            Render = new RenderButtonEdit(new DataUrl("StudentPostEdit"))
+                            },
+                         }
                        })
                         </div>
                     </div>

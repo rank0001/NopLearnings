@@ -3,7 +3,7 @@ using Nop.Data.Mapping.Builders;
 using Nop.Plugin.Widgets.CustomTest.Domain;
 
 namespace Nop.Plugin.Widgets.CustomTest.Mapping.Builders;
-public class StudentBuilder : NopEntityBuilder<Student>
+public class EventTestBuilder : NopEntityBuilder<EventTest>
 {
     /// <summary>
     /// Apply entity configuration
@@ -12,8 +12,7 @@ public class StudentBuilder : NopEntityBuilder<Student>
     public override void MapEntity(CreateTableExpressionBuilder table)
     {
         //map the primary key (not necessary if it is Id field)
-        table.WithColumn(nameof(Student.Id)).AsInt32().PrimaryKey().Identity()
-        .WithColumn(nameof(Student.Age)).AsString()
-        .WithColumn(nameof(Student.Name)).AsString();
+        table
+        .WithColumn(nameof(EventTest.IsInserted)).AsBoolean().Nullable();   
     }
 }

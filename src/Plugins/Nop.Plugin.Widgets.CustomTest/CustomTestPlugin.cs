@@ -36,36 +36,13 @@ public class CustomTestPlugin : BasePlugin, IWidgetPlugin, IAdminMenuPlugin
             RouteValues = new RouteValueDictionary() { { "area", AreaNames.ADMIN } },
         };
 
-        var menuItem2 = new SiteMapNode()
-        {
-            SystemName = "CustomTest",
-            Title = "Get List",
-            ControllerName = "CustomTest",
-            ActionName = "GetAllStudentListAsync",
-            IconClass = "far fa-dot-circle",
-            Visible = true,
-            RouteValues = new RouteValueDictionary() { { "area", AreaNames.ADMIN } },
-        };
-
-        //var menuItem2 = new SiteMapNode()
-        //{
-        //    SystemName = "CustomTest",
-        //    Title = "Crud Test Create",
-        //    ControllerName = "CustomTest",
-        //    ActionName = "Create",
-        //    IconClass = "far fa-dot-circle",
-        //    Visible = true,
-        //    RouteValues = new RouteValueDictionary() { { "area", AreaNames.ADMIN } },
-        //};
-
         var pluginNode = rootNode.ChildNodes.FirstOrDefault(x => x.SystemName == "Third party plugins");
         //if (pluginNode != null)
         //    pluginNode.ChildNodes.Add(menuItem);
         //else
         //    rootNode.ChildNodes.Add(menuItem);
 
-        pluginNode.ChildNodes.Add(menuItem);
-        pluginNode.ChildNodes.Add(menuItem2);   
+        pluginNode.ChildNodes.Add(menuItem);   
 
         return Task.CompletedTask;
     }
