@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Nop.Core.Domain.Blogs;
 using Nop.Data;
 using Nop.Plugin.Widgets.CustomTest.Domain;
 
@@ -30,6 +31,11 @@ public class StudentService: IStudentService
         var query = _studentRepository.Table;
 
         return await query.ToListAsync();
+    }
+
+    public virtual async Task InsertStudentAsync(Student student)
+    {
+        await _studentRepository.InsertAsync(student);
     }
 
     #endregion

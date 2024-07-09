@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core;
+using Nop.Core.Domain.Blogs;
+using Nop.Plugin.Widgets.CustomTest.Domain;
 using Nop.Plugin.Widgets.CustomTest.Models;
 using Nop.Plugin.Widgets.CustomTest.Services;
 using Nop.Services.Catalog;
 using Nop.Services.Customers;
+using Nop.Web.Areas.Admin.Infrastructure.Mapper.Extensions;
 using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Models.DataTables;
@@ -30,9 +33,23 @@ public class CustomTestController : BasePluginController
     {
         return View();
     }
-    public ActionResult Create()
+    public ActionResult CrudPostCreate()
     {
         return View();
+    }
+
+    [HttpPost]
+    public virtual async Task<IActionResult> CrudPostCreate(StudentModel model)
+    {
+        var errors = ModelState.Values.SelectMany(v => v.Errors);
+        //if (ModelState.IsValid)
+       // {
+            var student = model.ToEntity<Student>();
+            await _studentService.InsertStudentAsync(student);
+            return RedirectToAction("TestCrudMenu", new { id = student.Id });
+        //}
+
+        return View(model);
     }
 
     [HttpPost]

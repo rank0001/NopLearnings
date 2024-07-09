@@ -15,6 +15,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Areas\Admin\Views\CrudPostCreate.cshtml" />
     <None Remove="Areas\Admin\Views\CustomTest.cshtml" />
     <None Remove="Areas\Admin\Views\Shared\Alert.cshtml" />
     <None Remove="Areas\Admin\Views\Shared\Components\AclDisabledWarning\Default.cshtml" />
@@ -57,6 +58,8 @@
     <None Remove="Areas\Admin\Views\Shared\_MenuItem.cshtml" />
     <None Remove="Areas\Admin\Views\Shared\_Table.Definition.cshtml" />
     <None Remove="Areas\Admin\Views\Test.cshtml" />
+    <None Remove="Areas\Admin\Views\_CreateOrUpdate.cshtml" />
+    <None Remove="Areas\Admin\Views\_CreateOrUpdate.Info.cshtml" />
     <None Remove="Areas\Admin\Views\_ViewImports.cshtml" />
     <None Remove="Areas\Admin\Views\_ViewStart.cshtml" />
     <None Remove="plugin.json" />
@@ -165,6 +168,11 @@
     <ClearPluginAssemblies Include="$(MSBuildProjectDirectory)\..\..\Build\ClearPluginAssemblies.proj" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Views\CrudPostCreate.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Areas\Admin\Views\CustomTest.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -369,6 +377,16 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
     <Content Include="Areas\Admin\Views\Test.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Admin\Views\_CreateOrUpdate.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Admin\Views\_CreateOrUpdate.Info.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Areas\Admin\Views\_ViewImports.cshtml">
