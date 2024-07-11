@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Nop.Core;
 using Nop.Core.Domain.Orders;
+using Nop.Core.Domain.Payments;
+using Nop.Core.Infrastructure;
 using Nop.Plugin.Payments.Stripe.Components;
 using Nop.Plugin.Payments.Stripe.Enums;
+using Nop.Plugin.Payments.Stripe.Extensions;
 using Nop.Plugin.Payments.Stripe.Models;
 using Nop.Plugin.Payments.Stripe.Validators;
 using Nop.Services.Configuration;
@@ -67,9 +71,28 @@ namespace Nop.Plugin.Payments.Stripe
             return Task.FromResult(true);
         }
 
-        public Task<CapturePaymentResult> CaptureAsync(CapturePaymentRequest capturePaymentRequest)
+        public async Task<CapturePaymentResult> CaptureAsync(CapturePaymentRequest capturePaymentRequest)
         {
-            return Task.FromResult(new CapturePaymentResult { Errors = new[] { "Capture method not supported" } });
+            if (capturePaymentRequest == null)
+                throw new ArgumentNullException(nameof(CapturePaymentRequest));
+
+            var capture = await capturePaymentRequest.CreateCapture(_stripePaymentSettings);
+
+            if (capture.Status == "succeeded")
+            {
+                return new CapturePaymentResult
+                {
+                    NewPaymentStatus = PaymentStatus.Paid,
+                    CaptureTransactionId = capture.Id,
+                };
+            }
+
+            return new CapturePaymentResult
+            {
+                Errors = new List<string>(new[] { $"An error occured attempting to capture charge {capture.Id}." }),
+                NewPaymentStatus = PaymentStatus.Authorized,
+                CaptureTransactionId = capture.Id
+            };
         }
 
         public async Task<decimal> GetAdditionalHandlingFeeAsync(IList<ShoppingCartItem> cart)
@@ -85,12 +108,19 @@ namespace Nop.Plugin.Payments.Stripe
 
         public Task<ProcessPaymentRequest> GetPaymentInfoAsync(IFormCollection form)
         {
-            return Task.FromResult(new ProcessPaymentRequest());
+            return Task.FromResult(new ProcessPaymentRequest
+            {
+                CreditCardName = form["CardholderName"],
+                CreditCardNumber = form["CardNumber"],
+                CreditCardExpireMonth = int.Parse(form["ExpireMonth"]),
+                CreditCardExpireYear = int.Parse(form["ExpireYear"]),
+                CreditCardCvv2 = form["CardCode"]
+            });
         }
 
         public async Task<string> GetPaymentMethodDescriptionAsync()
         {
-           return _stripePaymentSettings.Title;
+            return _stripePaymentSettings.Title;
         }
 
         public Type GetPublicViewComponent()
@@ -100,10 +130,11 @@ namespace Nop.Plugin.Payments.Stripe
 
         public Task<bool> HidePaymentMethodAsync(IList<ShoppingCartItem> cart)
         {
-            var dataExistenceCheck = string.IsNullOrEmpty(_stripePaymentSettings.GetPublishableKey())
-                                    || string.IsNullOrEmpty(_stripePaymentSettings.GetSecretKey());
+            //var dataExistenceCheck = string.IsNullOrEmpty(_stripePaymentSettings.GetPublishableKey())
+            //                        || string.IsNullOrEmpty(_stripePaymentSettings.GetSecretKey());
 
-            return Task.FromResult(dataExistenceCheck);
+            //return Task.FromResult(dataExistenceCheck);
+            return Task.FromResult(false);
         }
 
         public override async Task InstallAsync()
@@ -169,9 +200,32 @@ namespace Nop.Plugin.Payments.Stripe
             return Task.CompletedTask;
         }
 
-        public Task<ProcessPaymentResult> ProcessPaymentAsync(ProcessPaymentRequest processPaymentRequest)
+        public async Task<ProcessPaymentResult> ProcessPaymentAsync(ProcessPaymentRequest processPaymentRequest)
         {
-            return Task.FromResult(new ProcessPaymentResult());
+            var result = new ProcessPaymentResult()
+            {
+                NewPaymentStatus = _stripePaymentSettings.PaymentType
+                                   == PaymentType.Authorize ? PaymentStatus.Authorized : PaymentStatus.Paid,
+
+            };
+
+            var currentStore = await EngineContext.Current.Resolve<IStoreContext>().GetCurrentStoreAsync();
+            var paymentResponse = await processPaymentRequest.CompletePayment(_stripePaymentSettings);
+
+            var transactionResult = $"Transaction was processed by using stripe, status is {paymentResponse.Status}";
+
+            if (_stripePaymentSettings.PaymentType == PaymentType.Capture)
+            {
+                result.CaptureTransactionId = paymentResponse.Id;
+                result.CaptureTransactionResult = transactionResult;
+            }
+            else if (_stripePaymentSettings.PaymentType == PaymentType.Authorize)
+            {
+                result.AuthorizationTransactionId = paymentResponse.Id;
+                result.AuthorizationTransactionResult = transactionResult;
+            }
+
+            return result;
         }
 
         public Task<ProcessPaymentResult> ProcessRecurringPaymentAsync(ProcessPaymentRequest processPaymentRequest)

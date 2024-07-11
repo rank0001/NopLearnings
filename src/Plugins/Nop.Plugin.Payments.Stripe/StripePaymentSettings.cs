@@ -1,5 +1,6 @@
 ﻿using Nop.Core.Configuration;
 using Nop.Plugin.Payments.Stripe.Enums;
+using Stripe;
 
 namespace Nop.Plugin.Payments.Stripe;
 
@@ -19,8 +20,14 @@ public class StripePaymentSettings : ISettings
     {
         return UseSandbox ? TestSecretKey : LiveSecretKey;
     }
+
     public string GetPublishableKey()
     {
         return UseSandbox ? TestPublishableKey : LivePublishableKey;
+    }
+
+    public StripeClient GetStripeClient()
+    {
+        return new StripeClient(GetSecretKey());
     }
 }

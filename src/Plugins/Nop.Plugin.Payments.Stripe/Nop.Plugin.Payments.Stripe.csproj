@@ -51,6 +51,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Stripe.net" Version="39.48.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Nop.Services\Nop.Services.csproj" />
   </ItemGroup>
 </Project>
