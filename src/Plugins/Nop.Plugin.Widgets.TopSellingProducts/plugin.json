@@ -1,0 +1,11 @@
+{
+  "Group": "Widgets",
+  "FriendlyName": "Top Selling Products Plugin",
+  "SystemName": "Widgets.TopSellingProducts",
+  "Version": "4.70.1",
+  "SupportedVersions": [ "4.70" ],
+  "Author": "zubayer ahmed sakib",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.Widgets.TopSellingProducts.dll",
+  "Description": "Top Selling products will be displayed in the home page of public site in a slider."
+}

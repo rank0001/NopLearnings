@@ -1,0 +1,44 @@
+@model Nop.Plugin.Widgets.TrendingProducts.Models.TrendingProductsPublicInfoModel
+
+@{
+    Layout = "";
+}
+
+<link rel="stylesheet" href="~/Plugins/Widgets.TrendingProducts/Contents/slick/slick.css" />
+<link rel="stylesheet" href="~/Plugins/Widgets.TrendingProducts/Contents/slick/slick.theme.css" />
+<link rel="stylesheet" href="~/Plugins/Widgets.TrendingProducts/Contents/css/styles.css" />
+
+<script asp-exclude-from-bundle="true" asp-location="Footer" type="text/javascript" 
+    src="~/Plugins/Widgets.TrendingProducts/Contents/slick/slick.min.js"></script>
+
+<div class="product-grid home-page-trending-product-grid">
+    <div class="title">
+        <strong>Trending Products</strong>
+    </div>
+    <div class="item-grid trending-products">
+        @if(Model.Products.Count > 0)
+        {
+            @foreach (var item in Model.Products)
+            {
+                <div class="item-box">
+                    @await Html.PartialAsync("_ProductBox", item)
+                </div>
+            }
+        }
+        else
+        {
+            <p class="text-center">No products to display.</p>
+        }
+    </div>
+</div>
+
+<script asp-location="Footer">
+    $(window).on('load', function () {
+        $('.trending-products').slick({
+            slidesToShow: @Model.SliderSettings.SlidesToShow,
+            slidesToScroll: @Model.SliderSettings.SlidesToScroll,
+            autoplay: @Model.SliderSettings.AutoPlay.ToString().ToLower(),
+            autoplaySpeed: @Model.SliderSettings.AutoPlaySpeed,
+      });
+    });
+</script>
