@@ -1,4 +1,4 @@
-@Nop.Plugin.Widgets.TopSellingProducts.Models.ConfigurationModel;
+@model Nop.Plugin.Widgets.TopSellingProducts.Models.ConfigurationModel;
 @{
     Layout = "_ConfigurePlugin";
 }
@@ -34,7 +34,7 @@
                             <nop-label asp-for="TotalDisplay" />
                         </div>
                         <div class="col-md-9">
-                            <nop-editor asp-for="Count" />
+                            <nop-editor asp-for="TotalDisplay" />
                             <span asp-validation-for="TotalDisplay"></span>
                         </div>
                     </div>

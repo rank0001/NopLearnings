@@ -8,6 +8,8 @@ using Nop.Web.Framework.Mvc.Filters;
 using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
 using DocumentFormat.OpenXml.EMMA;
+using Nop.Core;
+using Nop.Plugin.Widgets.TopSellingProducts.Models;
 
 namespace Nop.Plugin.Widgets.TopSellingProducts.Controllers;
 
@@ -15,11 +17,13 @@ namespace Nop.Plugin.Widgets.TopSellingProducts.Controllers;
 [AuthorizeAdmin]
 [AutoValidateAntiforgeryToken]
 
-public class TopSellingProductsController : BasePluginController
+public class TopSellingProductsController(IStoreContext storeContext) : BasePluginController
 {
+    private readonly IStoreContext _storeContext = storeContext;
     public IActionResult Configure()
     {
-        return View("~/Plugins/Widgets.NivoSlider/Views/Configure.cshtml");
+        var model = new ConfigurationModel();
+        return View("~/Plugins/Widgets.TopSellingProducts/Views/Configure.cshtml", model);
     }
 
 }

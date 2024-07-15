@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Routing;
+using Nop.Core;
 using Nop.Plugin.Widgets.TopSellingProducts.Components;
 using Nop.Services.Cms;
 using Nop.Services.Orders;
@@ -14,8 +15,9 @@ using Nop.Web.Framework.Menu;
 
 namespace Nop.Plugin.Widgets.TopSellingProducts
 {
-    public class TopSellingProductsPlugin : BasePlugin, IWidgetPlugin, IAdminMenuPlugin
+    public class TopSellingProductsPlugin(IStoreContext storeContext) : BasePlugin, IWidgetPlugin, IAdminMenuPlugin
     {
+        private readonly IStoreContext _storeContext = storeContext;
         public bool HideInWidgetList => false;
 
         public Type GetWidgetViewComponent(string widgetZone)
@@ -30,6 +32,8 @@ namespace Nop.Plugin.Widgets.TopSellingProducts
 
         public override async Task InstallAsync()
         {
+            var storeScope = await _storeContext.GetActiveStoreScopeConfigurationAsync();
+            //await _settingService.SaveSettingAsync(new TopSellingProducts(), storeScope);
             await base.InstallAsync();
         }
 
@@ -51,8 +55,6 @@ namespace Nop.Plugin.Widgets.TopSellingProducts
                 RouteValues = new RouteValueDictionary() { { "area", AreaNames.ADMIN } },
             };
 
-            var listofNodes = rootNode.ChildNodes.Select(x => x.SystemName).ToList();
-
             var pluginNode = rootNode.ChildNodes.FirstOrDefault(x => x.SystemName == "Third party plugins");
 
             if (pluginNode != null)
@@ -62,7 +64,6 @@ namespace Nop.Plugin.Widgets.TopSellingProducts
             }
             else
                 rootNode.ChildNodes.Add(menuItem);
-
 
             return Task.CompletedTask;
         }

@@ -10,11 +10,11 @@ namespace Nop.Plugin.Widgets.TopSellingProducts.Models;
 public record ConfigurationModel : BaseNopModel
 {
     [UIHint("DateTime")]
-    public DateTime FromDate { get; set; }
+    public DateTime FromDate { get; set; } = DateTime.Now.AddDays(-30);
 
     [UIHint("DateTime")]
-    public DateTime ToDate { get; set; }
+    public DateTime ToDate { get; set; } = DateTime.Now;
 
     [UIHint("Number")]
-    public int TotalDisplay { get; set; }
+    public int TotalDisplay { get; set; } = 10;
 }
