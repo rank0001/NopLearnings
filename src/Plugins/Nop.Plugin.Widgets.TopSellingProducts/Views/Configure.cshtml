@@ -3,12 +3,20 @@
     Layout = "_ConfigurePlugin";
 }
 
+<style>
+    #FromDate, #ToDate{
+        width:100%;
+    }
+
+</style>
+
 <form asp-area="Admin" asp-controller="TopSellingProducts" asp-action="Configure" method="post">
+    <div asp-validation-summary="All"></div>
     <div class="content">
         <div class="container-fluid">
             <div class="card card-default">
                 <div class="card-header">
-                    Update Settings
+                    Configure Settings
                 </div>
                 <div class="card-body">
                     <div class="form-group row">
@@ -17,7 +25,6 @@
                         </div>
                         <div class="col-md-9">
                             <nop-editor asp-for="FromDate" />
-                            <span asp-validation-for="FromDate"></span>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -26,7 +33,6 @@
                         </div>
                         <div class="col-md-9">
                             <nop-editor asp-for="ToDate" />
-                            <span asp-validation-for="ToDate"></span>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -41,18 +47,10 @@
                 </div>
             </div>
 
-            <div class="card card-default">
-                <div class="card-body">
-                    <div class="form-group">
-                        <div class="col-md-9 offset-md-3">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save mr-1"></i>
-                                Save
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <button type="submit" class="btn btn-primary offset-3">
+                <i class="fas fa-save"></i>
+                Save
+            </button>
         </div>
     </div>
 </form>

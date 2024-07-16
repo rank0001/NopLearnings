@@ -1,1 +1,22 @@
-<h2>Yeah the view is rendered!</h2>
+@model Nop.Plugin.Widgets.TopSellingProducts.Models.TopSellingProductsModel
+
+<div class="product-grid home-page-trending-product-grid">
+    <div class="title">
+        <strong>Top Selling Products</strong>
+    </div>
+    <div class="item-grid trending-products">
+        @if (Model.Products.Count > 0)
+        {
+            @foreach (var item in Model.Products)
+            {
+                <div class="item-box">
+                    @await Html.PartialAsync("_ProductBox", item)
+                </div>
+            }
+        }
+        else
+        {
+            <p class="text-center">No products to display.</p>
+        }
+    </div>
+</div>
