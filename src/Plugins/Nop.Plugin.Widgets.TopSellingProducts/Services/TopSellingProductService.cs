@@ -44,7 +44,7 @@ public class TopSellingProductService(IRepository<Product> productRepository,
                      orderby a.Total descending
                      select p;
 
-        return await result.Take(topSoldsettings.TotalDisplay).ToListAsync();
+        return await result.Take(topSoldsettings.TotalDisplay).Distinct().ToListAsync();
     }
 }
 

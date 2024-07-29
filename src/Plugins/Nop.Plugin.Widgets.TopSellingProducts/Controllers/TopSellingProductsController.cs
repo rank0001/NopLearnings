@@ -36,7 +36,7 @@ public class TopSellingProductsController(IStoreContext storeContext,
 
         var model = new ConfigurationModel
         {
-            FromDate = topSellingProductsSettings.FromDate,
+            FromDate = topSellingProductsSettings.FromDate ,
             ToDate = topSellingProductsSettings.ToDate,
             TotalDisplay = topSellingProductsSettings.TotalDisplay
         };
@@ -52,7 +52,7 @@ public class TopSellingProductsController(IStoreContext storeContext,
             var storeScope = await _storeContext.GetActiveStoreScopeConfigurationAsync();
             var topSellingProductsSettings = await _settingService.LoadSettingAsync<TopSellingProductsSettings>();
 
-            topSellingProductsSettings.FromDate = model.FromDate;
+            topSellingProductsSettings.FromDate = model.FromDate ;
             topSellingProductsSettings.ToDate = model.ToDate;
             topSellingProductsSettings.TotalDisplay = model.TotalDisplay;
 
