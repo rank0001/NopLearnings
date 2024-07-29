@@ -67,5 +67,9 @@ public class TopSellingProductsController(IStoreContext storeContext,
         return View(model);
     }
 
+    public ActionResult TestBranchCheck()
+    {
+        return View();
+    }
 }
 
